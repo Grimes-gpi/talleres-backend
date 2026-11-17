@@ -1,0 +1,32 @@
+# Blueprint de Render: crea la base PostgreSQL y el backend en un solo paso.
+# En Render: New > Blueprint > elige este repositorio.
+databases:
+  - name: talleres-db
+    plan: free
+    databaseName: talleres_comunitarios
+    user: talleres
+
+services:
+  - type: web
+    name: talleres-api
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    envVars:
+      - key: DB_HOST
+        fromDatabase: { name: talleres-db, property: host }
+      - key: DB_PORT
+        fromDatabase: { name: talleres-db, property: port }
+      - key: DB_NAME
+        fromDatabase: { name: talleres-db, property: database }
+      - key: DB_USERNAME
+        fromDatabase: { name: talleres-db, property: user }
+      - key: DB_PASSWORD
+        fromDatabase: { name: talleres-db, property: password }
+      # Render genera un secreto aleatorio para firmar los tokens.
+      - key: JWT_SECRET
+        generateValue: true
+      # Render te pedirá escribir el código de instructor al crear el Blueprint.
+      - key: INSTRUCTOR_CODE
+        sync: false
