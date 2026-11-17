@@ -1,0 +1,56 @@
+{
+  "info": {
+    "name": "Talleres Comunitarios - API Java",
+    "description": "Colección de pruebas para el backend de talleres comunitarios.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8081" },
+    { "key": "workshopId", "value": "1" }
+  ],
+  "item": [
+    {
+      "name": "Crear taller",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"name\": \"Informática básica\",\n  \"description\": \"Uso inicial del computador\",\n  \"instructor\": \"Ana Pérez\",\n  \"category\": \"Tecnología\",\n  \"imageUrl\": null,\n  \"maxCapacity\": 20,\n  \"dateTime\": \"2026-11-05T09:00:00\"\n}" },
+        "url": "{{baseUrl}}/api/workshops"
+      }
+    },
+    {
+      "name": "Listar y filtrar talleres",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/workshops?name=informática&category=Tecnología" }
+    },
+    {
+      "name": "Consultar taller",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/workshops/{{workshopId}}" }
+    },
+    {
+      "name": "Editar taller",
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"name\": \"Informática básica actualizada\",\n  \"description\": \"Uso inicial del computador e internet\",\n  \"instructor\": \"Ana Pérez\",\n  \"category\": \"Tecnología\",\n  \"imageUrl\": null,\n  \"maxCapacity\": 25,\n  \"dateTime\": \"2026-10-22T09:00:00\"\n}" },
+        "url": "{{baseUrl}}/api/workshops/{{workshopId}}"
+      }
+    },
+    {
+      "name": "Inscribir beneficiario",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"workshopId\": {{workshopId}},\n  \"beneficiaryName\": \"Carlos Gómez\",\n  \"beneficiaryDocument\": \"100200300\"\n}" },
+        "url": "{{baseUrl}}/api/registrations"
+      }
+    },
+    {
+      "name": "Ver inscritos",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/workshops/{{workshopId}}/registrations" }
+    },
+    {
+      "name": "Cancelar taller",
+      "request": { "method": "DELETE", "url": "{{baseUrl}}/api/workshops/{{workshopId}}" }
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+build/
+.gradle/
+backend-data/
+.env
+.env.local
+postman/
+*.ps1
